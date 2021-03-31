@@ -79,20 +79,8 @@ namespace UnityTemplateProjects
         [Tooltip("Whether or not to invert our Y axis for mouse input to rotation.")]
         public bool invertY = false;
 
-        [Header("Cursor Settings")]
-        [Tooltip("Whether or not to hide the cursor on enable.")]
-        public bool hideCursor = false;
-        [Tooltip("Whether or not to lock cursor to the game view on enable.")]
-        public bool lockCursor = false;
-        
         void OnEnable()
         {
-            Cursor.visible = hideCursor;
-            if (lockCursor)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-
             m_TargetCameraState.SetFromTransform(transform);
             m_InterpolatingCameraState.SetFromTransform(transform);
         }
@@ -129,15 +117,6 @@ namespace UnityTemplateProjects
         
         void Update()
         {
-            // Exit Sample  
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                Application.Quit();
-				#if UNITY_EDITOR
-				UnityEditor.EditorApplication.isPlaying = false; 
-				#endif
-            }
-
             // Rotation
             var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
             var mouseSensitivityFactor = mouseSensitivityCurve.Evaluate(mouseMovement.magnitude);
