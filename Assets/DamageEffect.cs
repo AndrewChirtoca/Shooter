@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DroneDamageEffect : MonoBehaviour
+public class DamageEffect : MonoBehaviour
 {
     [SerializeField]
     private Renderer _renderer;
@@ -40,10 +40,15 @@ public class DroneDamageEffect : MonoBehaviour
     [ContextMenu("TriggerEffect")]
     public void TriggerEffect()
     {
-        if(_effectRoutineInstance != null)
+        if (_effectRoutineInstance != null)
+        {
             StopCoroutine(_effectRoutineInstance);
-        
-        StartCoroutine(EffectRoutine());
+        }
+
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(EffectRoutine());
+        }
     }
 
     private IEnumerator EffectRoutine()
